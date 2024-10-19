@@ -18,6 +18,28 @@ model = DeepFace.build_model('VGG-Face')  # 모델 로드
 @app.route('/')
 def home():
     return render_template('index.html')  # HTML 파일 렌더링
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+    
+    if file:
+        filename = secure_filename(file.filename)
+        file_path = os.path.join('saved_faces', filename)
+        file.save(file_path)  # 파일 저장
+        
+        # 얼굴 인식 처리
+        result = DeepFace.analyze(file_path, actions=['emotion'], enforce_detection=False)
+        
+        # 결과를 JSON 형식으로 반환
+        return jsonify(result)
+
+    return jsonify({'error': 'File upload failed'})
 
 @app.route('/upload', methods=['POST'])
 def analyze():
