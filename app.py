@@ -6,6 +6,10 @@ import base64
 from deepface import DeepFace
 import os
 import json
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 if not os.path.exists('saved_faces'):
     os.makedirs('saved_faces')  # 저장할 디렉토리 생성

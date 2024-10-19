@@ -171,7 +171,7 @@
             // 캔버스의 이미지를 데이터 URL로 추출
             const imageData = outputCanvas.toDataURL('image/png'); // imageData 정의
             // 서버로 이미지 전송
-            fetch('/upload', {
+            fetch('http://127.0.0.1:5000/upload', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
