@@ -14,8 +14,6 @@ CORS(app)
 if not os.path.exists('saved_faces'):
     os.makedirs('saved_faces')  # 저장할 디렉토리 생성
 
-app = Flask(__name__)
-
 # 모델을 전역 변수로 캐시
 model = DeepFace.build_model('VGG-Face')  # 모델 로드
 
