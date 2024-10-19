@@ -170,13 +170,15 @@
 
             // 캔버스의 이미지를 데이터 URL로 추출
             const imageData = outputCanvas.toDataURL('image/png'); // imageData 정의
+
+            // FormData 객체 생성
+            const formData = new FormData();
+            formData.append('file', dataURLtoBlob(imageData), 'image.png'); // Blob으로 변환하여 추가
+
             // 서버로 이미지 전송
             fetch('http://127.0.0.1:5000/upload', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: imageData }), // 이미지 데이터를 JSON 형식으로 전송
+                body: formData, // FormData 객체 전송
             })
             .then((response) => response.json())
             .then((data) => {
@@ -188,6 +190,19 @@
                 console.error('Error:', error);
             });
         });
+
+        // Data URL을 Blob으로 변환하는 함수
+        function dataURLtoBlob(dataURL) {
+            const byteString = atob(dataURL.split(',')[1]);
+            const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        }
+
         // 분석 결과를 화면에 표시하는 함수
         function displayResult(data) {
             const resultDiv = document.getElementById('result');
