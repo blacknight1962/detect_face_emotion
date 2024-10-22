@@ -193,7 +193,7 @@
 
         // Data URL을 Blob으로 변환하는 함수
         function dataURLtoBlob(dataURL) {
-            const byteString = atob(dataURL.split(',')[1]);
+            const byteString = atob(dataURL.split(',')[1]);guswo 
             const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
             const ab = new ArrayBuffer(byteString.length);
             const ia = new Uint8Array(ab);

@@ -88,7 +88,7 @@ def analyze():
         else:
             result['name'] = recognized_name if face_found else None  # 단일 객체일 경우 처리
 
-        return jsonify(result)  # 분석 결���를 JSON 형식으로 반환
+        return jsonify(result)  # 분석 결과를 JSON 형식으로 반환
     except Exception as e:
         print(f"Error: {str(e)}")  # 오류 메시지를 콘솔에 출력
         return jsonify({"error": str(e)}), 400  # 오류 발생 시 에러 메시지 반환
@@ -195,4 +195,4 @@ def search_face():
     return jsonify({"name": recognized_name if face_found else None})  # 검색 결과 반환
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
